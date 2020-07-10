@@ -10,7 +10,7 @@ plugins {
 }
 
 def VERSIONS = [
-  assertj     : "3.16.1",
+  assertj   : "3.16.1",
   cucumber  : "6.2.2",
   junit     : "5.7.0-M1",
   gradle    : "6.5.1",
@@ -57,7 +57,7 @@ class CucumberFeature extends JavaExec {
   }
 
   CucumberFeature() {
-    group "features"
+    group "cucumber"
     dependsOn project.tasks.getByName("testClasses"), project.tasks.getByName("processResources")
     outputs.dir "${project.buildDir}/reports"
     main "org.junit.platform.console.ConsoleLauncher"
@@ -112,7 +112,7 @@ tasks {
       xml.enabled false
       csv.enabled false
       html.enabled true
-      html.destination file("${buildDir}/reports/jacoco")
+      html.destination file("${project.buildDir}/reports/jacoco")
     }
   }
   test {
@@ -128,7 +128,7 @@ tasks {
   }
 }
 
-tasks.register("all", CucumberFeature) {
+tasks.register("allFeatures", CucumberFeature) {
   it.withPackage("features")
 }
 

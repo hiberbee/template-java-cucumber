@@ -18,3 +18,7 @@ jobs:
         uses: eskatos/gradle-command-action@v1
         with:
           arguments: build
+      - name: Test features with Gradle
+        uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: allFeatures

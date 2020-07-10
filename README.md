@@ -1,5 +1,9 @@
 # Project Template: Java Cucumber
 
+![GitHub](https://img.shields.io/github/license/hiberbee/template-java-cucumber)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/hiberbee/template-java-cucumber/Lint%20workflow?label=lint)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/hiberbee/template-java-cucumber/Build%20workflow)
+
 ## Technologies
 
 - Gradle 6.5
