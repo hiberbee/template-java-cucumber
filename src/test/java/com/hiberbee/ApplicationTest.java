@@ -5,12 +5,12 @@ import io.cucumber.junit.platform.engine.Cucumber;
 import io.cucumber.spring.CucumberContextConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cache.annotation.EnableCaching;
 
 @CucumberContextConfiguration
-@EnableCaching
 @Cucumber
-@SpringBootTest(classes = ApplicationConfiguration.class)
+@SpringBootTest(
+    classes = ApplicationConfiguration.class,
+    webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class ApplicationTest {
 
   @Test

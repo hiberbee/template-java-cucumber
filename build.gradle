@@ -17,7 +17,9 @@ def VERSIONS = [
   springBoot: "2.3.1.RELEASE"
 ]
 
-group "com.hiberbee"
+def organization = "hiberbee"
+
+group "com.${organization}"
 version "1.0.0"
 
 application {
@@ -28,35 +30,39 @@ springBoot {
   buildInfo()
 }
 
-class CucumberFeature extends JavaExec {
+class CucumberTask extends JavaExec {
 
   @Input
-  void withTags(String... tags) {
+  CucumberTask withTags(String... tags) {
     tags.each {
       args += ["--include-tag", it]
     }
+    return this
   }
 
   @Input
-  void withoutTags(String... tags) {
+  CucumberTask withoutTags(String... tags) {
     tags.each {
       args += ["--exclude-tag", it]
     }
+    return this
   }
 
   @Input
-  void withPackage(String packageName = "features") {
+  CucumberTask withPackage(String packageName = "features") {
     args += ["--select-package", packageName]
+    return this
   }
 
   @Input
-  void withProperties(Map<String, Object> properties) {
+  CucumberTask withProperties(Map<String, Object> properties) {
     properties.each {
       jvmArgs += "-D${it.key}=${it.value}"
     }
+    return this
   }
 
-  CucumberFeature() {
+  CucumberTask() {
     group "cucumber"
     dependsOn project.tasks.getByName("testClasses"), project.tasks.getByName("processResources")
     outputs.dir "${project.buildDir}/reports"
@@ -87,7 +93,7 @@ tasks {
   idea {
     module {
       outputDir project.buildDir
-      downloadJavadoc true
+      downloadJavadoc false
       downloadSources true
       inheritOutputDirs true
       excludeDirs += files(".gradle", ".idea", ".scannerwork", "gradle")
@@ -101,11 +107,12 @@ tasks {
     properties {
       property "sonar.projectName", project.name
       property "sonar.projectKey", project.name
+      property "sonar.organization", organization
+      property "sonar.login", System.getenv("SONAR_TOKEN")
+      property "sonar.java.libraries", "${project.buildDir}/classes/java/main"
+      property "sonar.java.test.libraries", "${project.buildDir}/classes/java/test"
+      property "sonar.java.binaries", "${project.buildDir}/libs"
     }
-  }
-  wrapper {
-    gradleVersion VERSIONS.gradle
-    distributionType Wrapper.DistributionType.ALL
   }
   jacocoTestReport {
     reports {
@@ -126,10 +133,22 @@ tasks {
     }
     finalizedBy tasks.getByName("jacocoTestReport")
   }
+  wrapper {
+    gradleVersion VERSIONS.gradle
+    distributionType Wrapper.DistributionType.ALL
+  }
 }
 
-tasks.register("allFeatures", CucumberFeature) {
+tasks.register("allFeatures", CucumberTask) {
   it.withPackage("features")
+}
+tasks.register("taggedFeatures", CucumberTask) {
+  it.withPackage("features")
+    .withTags("Tag")
+}
+tasks.register("untaggedFeatures", CucumberTask) {
+  it.withPackage("features")
+    .withoutTags("Tag")
 }
 
 repositories {
@@ -140,10 +159,9 @@ dependencies {
   implementation platform("org.springframework.boot:spring-boot-dependencies:$VERSIONS.springBoot")
   implementation platform("io.cucumber:cucumber-core:$VERSIONS.cucumber")
   testImplementation platform("org.junit:junit-bom:$VERSIONS.junit")
-  testRuntime platform("org.junit:junit-bom:$VERSIONS.junit")
+  testRuntimeOnly platform("org.junit:junit-bom:$VERSIONS.junit")
 
   implementation("org.springframework.boot:spring-boot-starter-web")
-  implementation("io.cucumber:cucumber-core")
   implementation("io.cucumber:cucumber-java")
   implementation("io.cucumber:cucumber-spring")
   implementation("org.assertj:assertj-core:$VERSIONS.assertj")

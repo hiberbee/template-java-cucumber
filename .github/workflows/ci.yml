@@ -1,0 +1,52 @@
+name: Continuous Integration workflow
+on: push
+jobs:
+  gradle:
+    name: Gradle build
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Build project with Gradle
+        uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: build
+  sonarqube:
+    name: Sonarqube analysis
+    runs-on: ubuntu-20.04
+    needs:
+      - gradle
+    steps:
+      - name: Analyze sources with Sonarqube
+        uses: eskatos/gradle-command-action@v1
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          arguments: sonarqube
+  tagged-features:
+    name: Cucumber tagged features
+    runs-on: ubuntu-20.04
+    needs:
+      - gradle
+    steps:
+      - name: Test features with Gradle
+        uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: taggedFeatures
+  untagged-features:
+    name: Cucumber untagged features
+    runs-on: ubuntu-20.04
+    needs:
+      - gradle
+    steps:
+      - name: Test features with Gradle
+        uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: untaggedFeatures
