@@ -91,6 +91,18 @@ tasks {
     checkConstraints true
   }
   idea {
+    project {
+      settings {
+        copyright {
+          useDefault = "MIT"
+          profiles {
+            MIT {
+              notice = file("LICENSE").readLines().join("\n")
+            }
+          }
+        }
+      }
+    }
     module {
       outputDir project.buildDir
       downloadJavadoc false
