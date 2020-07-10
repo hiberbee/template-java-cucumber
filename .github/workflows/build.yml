@@ -8,7 +8,7 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Checkout source code
+      - name: Checkout sources
         uses: actions/checkout@v2
       - name: Set up JDK
         uses: actions/setup-java@v1

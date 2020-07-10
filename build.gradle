@@ -149,6 +149,7 @@ dependencies {
   implementation("org.assertj:assertj-core:$VERSIONS.assertj")
   testImplementation("org.springframework.boot:spring-boot-starter-test")
   testImplementation("org.junit.jupiter:junit-jupiter-api")
+  testImplementation("io.cucumber:cucumber-junit-platform-engine")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
   testRuntimeOnly("org.junit.platform:junit-platform-console")
   testRuntimeOnly("org.junit.platform:junit-platform-runner")
