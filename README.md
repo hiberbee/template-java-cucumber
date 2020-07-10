@@ -1,6 +1,13 @@
-# Project Template: QA Test Automation on Java
+# Project Template: Java Cucumber
 
-### Spring Boot Application
+## Technologies
+
+- Gradle 6.5
+- Cucumber 6.2.2
+- JUnit Jupiter 5.7.0
+- Spring Boot 2.3.1
+
+## IDE Setup
 
 Java properties:
 
