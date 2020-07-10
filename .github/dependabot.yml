@@ -1,0 +1,9 @@
+version: 2
+
+updates:
+  package-ecosystem: gradle
+  schedule:
+    interval: weekly
+  reviewers:
+    - "hiberbee/in-god-we-test"
+    - "vladyslavvolkov"
