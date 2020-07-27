@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.hiberbee.cucumber.definitions;
+package dev.hiberbee.cucumber.definitions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.en.Given;
@@ -32,14 +32,14 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.annotation.*;
 
 @CacheConfig(cacheNames = "cucumber")
-public class SampleStepDefinitions {
+public class SampleSteps {
 
   private final ObjectMapper objectMapper;
 
   @Value("#{cacheManager.getCache('cucumber')}")
   private Cache cache;
 
-  public SampleStepDefinitions(final ObjectMapper objectMapper) {
+  public SampleSteps(final ObjectMapper objectMapper) {
     this.objectMapper = objectMapper;
   }
 

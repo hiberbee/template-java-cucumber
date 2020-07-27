@@ -22,15 +22,20 @@
  * SOFTWARE.
  */
 
-package com.hiberbee;
+package dev.hiberbee.configurations;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
+import dev.hiberbee.TestApplication;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
+import org.springframework.context.annotation.*;
 
-@SpringBootApplication
-public class Application {
+@Configuration
+@ComponentScan(basePackageClasses = TestApplication.class)
+public class ApplicationConfiguration {
 
-  public static void main(final String[] args) {
-    new SpringApplicationBuilder().sources(Application.class).run(args);
+  @Bean
+  public CacheManager cacheManager() {
+    return new ConcurrentMapCacheManager("cucumber");
   }
 }

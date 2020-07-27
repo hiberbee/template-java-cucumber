@@ -22,29 +22,15 @@
  * SOFTWARE.
  */
 
-package com.hiberbee;
+package dev.hiberbee;
 
-import com.hiberbee.configurations.ApplicationConfiguration;
-import io.cucumber.junit.platform.engine.Cucumber;
-import io.cucumber.spring.CucumberContextConfiguration;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
-@CucumberContextConfiguration
-@Cucumber
-@SpringBootTest(
-    classes = ApplicationConfiguration.class,
-    webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class ApplicationTest {
+@SpringBootApplication
+public class TestApplication {
 
-  @Autowired private CacheManager cacheManager;
-
-  @Test
-  void testMain() {
-    Assertions.assertThat(this.cacheManager).isInstanceOf(ConcurrentMapCacheManager.class);
+  public static void main(final String[] args) {
+    new SpringApplicationBuilder().sources(TestApplication.class).run(args);
   }
 }
