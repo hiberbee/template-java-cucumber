@@ -22,31 +22,53 @@
  * SOFTWARE.
  */
 
-package dev.hiberbee;
+package dev.hiberbee.cucumber.definitions;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.hiberbee.configurations.ApplicationConfiguration;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.*;
+import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cache.*;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.concurrent.*;
+import org.springframework.test.context.event.annotation.PrepareTestInstance;
 
 @EnableCaching
+@AutoConfigureCache
 @SpringBootTest(
     classes = ApplicationConfiguration.class,
     webEnvironment = SpringBootTest.WebEnvironment.NONE)
-class TestApplicationTest {
+class SampleStepsTest {
 
-  @Autowired private CacheManager cacheManager;
+  @Autowired private ObjectMapper objectMapper;
 
-  @Value("#{cacheManager.getCache('cucumber')}")
-  private Cache cache;
+  private SampleSteps sampleSteps;
+
+  @PrepareTestInstance
+  @BeforeEach
+  public void setUp() {
+    this.sampleSteps = new SampleSteps(this.objectMapper);
+  }
 
   @Test
-  void testCache() {
-    Assertions.assertThat(this.cacheManager).isInstanceOf(ConcurrentMapCacheManager.class);
-    Assertions.assertThat(this.cache).isInstanceOf(ConcurrentMapCache.class);
+  void testStepExample() {
+    this.sampleSteps.stepExample();
+  }
+
+  @Test
+  void testStepExampleWithParameter() {
+    this.sampleSteps.stepExampleWithParameter("Something");
+  }
+
+  @Test
+  void testStepExampleWithBeanDependency() {
+    this.sampleSteps.stepExampleWithBeanDependency();
+  }
+
+  @Test
+  void testStepReturnsExample() {
+    final var expected = "test";
+    final var actual = this.sampleSteps.stepReturnsExample(expected);
+    Assertions.assertEquals(expected, actual);
   }
 }

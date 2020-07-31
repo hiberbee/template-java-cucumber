@@ -13,7 +13,7 @@ def VERSIONS = [
   assertj   : "3.16.1",
   cucumber  : "6.3.0",
   junit     : "5.7.0-M1",
-  gradle    : "6.6-rc-3",
+  gradle    : "6.6-rc-4",
   springBoot: "2.3.2.RELEASE"
 ]
 
@@ -80,8 +80,8 @@ class CucumberTask extends JavaExec {
 
 tasks {
   compileJava {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_14
+    targetCompatibility = JavaVersion.VERSION_14
     options.fork = true
     options.warnings = false
     options.incremental = true
