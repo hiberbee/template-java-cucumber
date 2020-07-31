@@ -25,6 +25,8 @@
 package dev.hiberbee;
 
 import dev.hiberbee.configurations.ApplicationConfiguration;
+import io.cucumber.junit.platform.engine.Cucumber;
+import io.cucumber.spring.CucumberContextConfiguration;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.*;
@@ -33,6 +35,8 @@ import org.springframework.cache.*;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.*;
 
+@Cucumber
+@CucumberContextConfiguration
 @EnableCaching
 @SpringBootTest(
     classes = ApplicationConfiguration.class,
