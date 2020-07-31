@@ -9,4 +9,3 @@ Feature: Cucumber Java project template
   Scenario: Tagged step examples
     Given simple step
     When step returns 'value' example
-    Then step result 'value' assertion example

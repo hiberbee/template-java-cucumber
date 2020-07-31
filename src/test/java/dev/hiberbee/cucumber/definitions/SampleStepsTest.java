@@ -24,31 +24,21 @@
 
 package dev.hiberbee.cucumber.definitions;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.hiberbee.configurations.ApplicationConfiguration;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cache.Cache;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.test.context.event.annotation.PrepareTestInstance;
 
 @EnableCaching
-@AutoConfigureCache
-@SpringBootTest(
-    classes = ApplicationConfiguration.class,
-    webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(classes = {ApplicationConfiguration.class, SampleSteps.class})
 class SampleStepsTest {
 
-  @Autowired private ObjectMapper objectMapper;
+  @Value("#{cacheManager.getCache('cucumber')}")
+  private Cache cache;
 
-  private SampleSteps sampleSteps;
-
-  @PrepareTestInstance
-  @BeforeEach
-  public void setUp() {
-    this.sampleSteps = new SampleSteps(this.objectMapper);
-  }
+  @Autowired private SampleSteps sampleSteps;
 
   @Test
   void testStepExample() {
@@ -70,5 +60,10 @@ class SampleStepsTest {
     final var expected = "test";
     final var actual = this.sampleSteps.stepReturnsExample(expected);
     Assertions.assertEquals(expected, actual);
+  }
+
+  @Test
+  void testValuePersistenceExample() {
+    this.sampleSteps.stepValuePersistenceExample(this.sampleSteps.stepReturnsExample("test"));
   }
 }
