@@ -1,4 +1,4 @@
-name: Continuous Integration workflow
+name: Continuous Integration
 on: push
 jobs:
   gradle:

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package dev.hiberbee.cucumber.definitions;
+package dev.hiberbee.features;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.en.Given;

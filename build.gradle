@@ -13,13 +13,12 @@ def VERSIONS = [
   assertj   : "3.16.1",
   cucumber  : "6.4.0",
   junit     : "5.7.0-M1",
-  gradle    : "6.6-rc-4",
+  gradle    : "6.6-rc-6",
   springBoot: "2.3.2.RELEASE"
 ]
 
 def organization = "hiberbee"
-
-group "com.${organization}"
+group "dev.${organization}"
 version "1.0.0"
 
 application {
@@ -68,11 +67,7 @@ class CucumberTask extends JavaExec {
     outputs.dir "${project.buildDir}/reports"
     main "org.junit.platform.console.ConsoleLauncher"
     classpath project.
-      convention.
-      getPlugin(JavaPluginConvention.class).
-      getSourceSets().
-      findByName("test").
-      runtimeClasspath
+      convention.getPlugin(JavaPluginConvention.class).getSourceSets().findByName("test").runtimeClasspath
     args "--include-engine", "cucumber", "--reports-dir", "${project.buildDir}/reports"
     finalizedBy project.tasks.getByName("jacocoTestReport")
   }
@@ -154,14 +149,14 @@ tasks {
 }
 
 tasks.register("allFeatures", CucumberTask) {
-  it.withPackage("features")
+  it.withPackage("${project.group}.features")
 }
 tasks.register("taggedFeatures", CucumberTask) {
-  it.withPackage("features")
+  it.withPackage("${project.group}.features")
     .withTags("Tag")
 }
 tasks.register("untaggedFeatures", CucumberTask) {
-  it.withPackage("features")
+  it.withPackage("${project.group}.features")
     .withoutTags("Tag")
 }
 

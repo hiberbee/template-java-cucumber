@@ -22,21 +22,17 @@
  * SOFTWARE.
  */
 
-package dev.hiberbee.cucumber.definitions;
+package dev.hiberbee.features;
 
 import dev.hiberbee.configurations.ApplicationConfiguration;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cache.Cache;
 import org.springframework.cache.annotation.EnableCaching;
 
 @EnableCaching
 @SpringBootTest(classes = {ApplicationConfiguration.class, SampleSteps.class})
 class SampleStepsTest {
-
-  @Value("#{cacheManager.getCache('cucumber')}")
-  private Cache cache;
 
   @Autowired private SampleSteps sampleSteps;
 

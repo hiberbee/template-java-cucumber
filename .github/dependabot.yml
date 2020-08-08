@@ -6,5 +6,5 @@ updates:
     schedule:
       interval: weekly
     reviewers:
-      - "hiberbee/in-god-we-test"
-      - "vladyslavvolkov"
+      - hiberbee/in-god-we-test
+      - vladyslavvolkov
