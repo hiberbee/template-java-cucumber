@@ -10,7 +10,7 @@ plugins {
 }
 
 def VERSIONS = [
-  assertj   : "3.17.0",
+  assertj   : "3.19.0",
   cucumber  : "6.10.0",
   junit     : "5.8.0-M1",
   gradle    : "6.6-rc-6",
